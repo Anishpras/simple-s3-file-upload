@@ -1,5 +1,11 @@
 # simple-s3-file-upload
 
+## 2.0.0
+
+### Major Changes
+
+- Updated for paths
+
 ## 1.0.0
 
 ### Major Changes
