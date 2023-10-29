@@ -55,4 +55,3 @@ export const uploadImage = async ({
     console.log(error);
   }
 };
-// https://xamtac-email-images.s3.us-east-1.amazonaws.com/s3-upload-test/test%2B2023-10-29T16%3A43%3A54.046Z.jpeg
