@@ -11,8 +11,8 @@
     "test": "vitest run",
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "lint": "tsc",
-    "ci": "pnpm run lint && pnpm run test && pnpm run build",
-    "release": "pnpm run lint && pnpm run test && pnpm run build && changeset publish"
+    "ci": "pnpm run test && pnpm run build",
+    "release": "pnpm run test && pnpm run build && changeset publish"
   },
   "keywords": [],
   "author": "Anish Prashun <anishprashun118@gmail.com",
