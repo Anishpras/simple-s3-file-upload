@@ -1,11 +1,10 @@
 {
   "name": "simple-s3-file-upload",
-  "version": "2.1.0",
-  "description": "",
+  "version": "2.1.1",
+  "description": "Simple S3 Image Upload is a Node.js package that simplifies the process of uploading images to Amazon S3 (Simple Storage Service). It uses the AWS SDK for JavaScript and the Buffer module to handle image data. This package allows you to quickly and easily upload images to your S3 bucket",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "type": "module",
   "private": false,
   "scripts": {
     "dev": "vitest",
@@ -15,7 +14,28 @@
     "ci": "pnpm run lint && pnpm run build",
     "release": "pnpm run lint && pnpm run build && changeset publish"
   },
-  "keywords": [],
+  "keywords": [
+    "aws",
+    "s3",
+    "image",
+    "uploader",
+    "amazon",
+    "storage",
+    "upload",
+    "image-upload",
+    "amazon-s3",
+    "binary",
+    "base64",
+    "image-storage",
+    "cloud-storage",
+    "object storage",
+    "asset management",
+    "media upload",
+    "asset upload",
+    "serverless",
+    "node.js",
+    "javascript"
+  ],
   "author": "Anish Prashun <anishprashun118@gmail.com",
   "license": "MIT",
   "devDependencies": {
