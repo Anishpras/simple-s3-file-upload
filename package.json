@@ -1,20 +1,23 @@
 {
   "name": "simple-s3-file-upload",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vitest",
     "test": "vitest run",
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "lint": "tsc",
-    "ci": "pnpm run lint && pnpm run test && pnpm run build"
+    "ci": "pnpm run lint && pnpm run test && pnpm run build",
+    "release": "pnpm run lint && pnpm run test && pnpm run build && changeset publish"
   },
   "keywords": [],
   "author": "Anish Prashun <anishprashun118@gmail.com",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@types/node": "^20.8.9",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
