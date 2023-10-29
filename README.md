@@ -1,2 +1,1 @@
-# simple-s3-file-upload
-Use this
+# Simple S3 Upload
