@@ -1,5 +1,11 @@
 # simple-s3-file-upload
 
+## 1.0.0
+
+### Major Changes
+
+- Added code for uploading
+
 ## 0.0.3
 
 ### Patch Changes
