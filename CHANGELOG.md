@@ -1,5 +1,11 @@
 # simple-s3-file-upload
 
+## 3.0.0
+
+### Major Changes
+
+- Added the video upload functionality
+
 ## 2.1.1
 
 ### Patch Changes
