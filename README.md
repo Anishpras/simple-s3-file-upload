@@ -87,6 +87,79 @@ The `uploadImage` function accepts the following parameters in its configuration
 - `path` (string): The path to save the image within the bucket.
 - `fileExtension` (string): The file extension of the image (e.g., "jpg", "png").
 
+## Documentation for `uploadVideo` Function
+
+The `uploadVideo` function is designed to facilitate the upload of video files to an Amazon S3 bucket. This function is asynchronous and takes an object as an argument with the following properties:
+
+- `file` (required): The video file to be uploaded. It should be of type `File`.
+- `accessKeyId` (required): The access key ID for AWS S3 authentication.
+- `secretAccessKey` (required): The secret access key for AWS S3 authentication.
+- `region` (required): The AWS region where the S3 bucket is located.
+- `bucket` (required): The name of the S3 bucket where the file will be uploaded.
+- `path` (required): The path within the S3 bucket where the file will be stored.
+- `fileExtension` (required): The file extension of the video file.
+
+## Example Usage
+
+```javascript
+import { uploadVideo } from 'your-module-path';
+
+const file = /* provide the File object representing your video */;
+const accessKeyId = 'your-access-key-id';
+const secretAccessKey = 'your-secret-access-key';
+const region = 'your-aws-region';
+const bucket = 'your-s3-bucket';
+const path = 'your-s3-path';
+const fileExtension = 'mp4';
+
+uploadVideo({
+  file,
+  accessKeyId,
+  secretAccessKey,
+  region,
+  bucket,
+  path,
+  fileExtension,
+})
+  .then((result) => {
+    console.log('Upload successful:', result);
+  })
+  .catch((error) => {
+    console.error('Error during upload:', error);
+  });
+```
+
+## Function Details
+
+### Input Parameters
+
+- `file` (type: `File`, required): The video file to be uploaded.
+- `accessKeyId` (type: `string`, required): AWS access key ID for S3 authentication.
+- `secretAccessKey` (type: `string`, required): AWS secret access key for S3 authentication.
+- `region` (type: `string`, required): AWS region where the S3 bucket is located.
+- `bucket` (type: `string`, required): Name of the S3 bucket where the file will be uploaded.
+- `path` (type: `string`, required): Path within the S3 bucket where the file will be stored.
+- `fileExtension` (type: `string`, required): File extension of the video file.
+
+### Output
+
+The function returns a Promise that resolves to an object with the following properties:
+
+- `url` (type: `string`): The public URL of the uploaded video file.
+- `data` (type: `PutObjectCommandOutput`): The response data from the AWS S3 service.
+
+## Error Handling
+
+If the `file` parameter is not provided, the function returns an `Error` object with the message "File not found."
+
+If an error occurs during the S3 upload process, the function catches the error and logs it to the console.
+
+## Dependencies
+
+This function relies on an external `s3Client` function, assumed to be correctly implemented elsewhere in your codebase.
+
+Please make sure to handle the AWS SDK and any other dependencies appropriately in your project.
+
 ## Contributing
 
 If you'd like to contribute to this project, please follow our [contribution guidelines](CONTRIBUTING.md).
