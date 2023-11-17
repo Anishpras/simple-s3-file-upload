@@ -4,7 +4,6 @@ import {
   PutObjectCommandInput,
 } from "@aws-sdk/client-s3";
 import { Buffer, File } from "buffer";
-
 const getImageBuffer = (base64: string) => {
   const base64str = base64.replace(/^data:image\/\w+;base64,/, "");
   return Buffer.from(base64str, "base64");
@@ -33,7 +32,7 @@ export const uploadImage = async ({
   region,
   bucket,
   path,
-  fileExtension,
+  videoFileExtension,
 }: {
   base64: string;
   accessKeyId: string;
@@ -41,16 +40,16 @@ export const uploadImage = async ({
   region: string;
   bucket: string;
   path: string;
-  fileExtension: string;
+  videoFileExtension: string;
 }) => {
-  const generatedPath = `${path}${new Date().toISOString()}.${fileExtension}`;
+  const generatedPath = `${path}${new Date().toISOString()}.${videoFileExtension}`;
   const buffer = getImageBuffer(base64);
   const params: PutObjectCommandInput = {
     Bucket: bucket,
     Key: generatedPath,
     Body: buffer,
     ACL: "public-read",
-    ContentType: `image/${fileExtension}`,
+    ContentType: `image/${videoFileExtension}`,
     ContentEncoding: "base64",
   };
   const command = new PutObjectCommand(params);
@@ -69,26 +68,26 @@ export const uploadImage = async ({
 };
 
 export const uploadVideo = async ({
-  file,
+  videoFile,
   accessKeyId,
   secretAccessKey,
   region,
   bucket,
   path,
-  fileExtension,
+  videoFileExtension,
 }: {
-  file: File;
+  videoFile: File;
   accessKeyId: string;
   secretAccessKey: string;
   region: string;
   bucket: string;
   path: string;
-  fileExtension: string;
+  videoFileExtension: string;
 }) => {
-  if (!file) return new Error(`File not found`);
-  const bytes = await file.arrayBuffer();
+  if (!videoFile) return new Error(`videoFile not found`);
+  const bytes = await videoFile.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  const generatedPath = `${path}${new Date().toISOString()}.${fileExtension}`;
+  const generatedPath = `${path}${new Date().toISOString()}.${videoFileExtension}`;
   const params: PutObjectCommandInput = {
     Bucket: bucket,
     Key: generatedPath,
@@ -107,5 +106,53 @@ export const uploadVideo = async ({
     };
   } catch (error) {
     console.log(error);
+  }
+};
+export const uploadFile = async ({
+  file,
+  accessKeyId,
+  secretAccessKey,
+  region,
+  bucket,
+  path,
+  maxFileSize,
+}: {
+  file: {
+    buffer: Buffer;
+    originalname: string;
+  };
+  accessKeyId: string;
+  secretAccessKey: string;
+  region: string;
+  bucket: string;
+  path: string;
+  maxFileSize: number;
+}) => {
+  if (!file) {
+    throw new Error("File not found");
+  }
+
+  if (file.buffer.length > maxFileSize * 1024 * 1024) {
+    throw new Error("File size exceeds the maximum allowed size");
+  }
+
+  const fileContent = file.buffer.toString("base64");
+  const bucketName = bucket;
+  const s3Key = `${path}/${new Date().toISOString()}-${file.originalname}`;
+
+  const client = s3Client({ accessKeyId, secretAccessKey, region });
+
+  const command = new PutObjectCommand({
+    Bucket: bucketName,
+    Key: s3Key,
+    Body: Buffer.from(fileContent, "base64"),
+  });
+
+  try {
+    const response = await client.send(command);
+    return { message: "File uploaded successfully", response };
+  } catch (err: any) {
+    console.error("Error uploading file:", err);
+    throw new Error(`Error uploading file: ${err.message}`);
   }
 };
