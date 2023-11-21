@@ -32,7 +32,7 @@ export const uploadImage = async ({
   region,
   bucket,
   path,
-  videoFileExtension,
+  imageFileExtension,
 }: {
   base64: string;
   accessKeyId: string;
@@ -40,16 +40,16 @@ export const uploadImage = async ({
   region: string;
   bucket: string;
   path: string;
-  videoFileExtension: string;
+  imageFileExtension: string;
 }) => {
-  const generatedPath = `${path}${new Date().toISOString()}.${videoFileExtension}`;
+  const generatedPath = `${path}${new Date().toISOString()}.${imageFileExtension}`;
   const buffer = getImageBuffer(base64);
   const params: PutObjectCommandInput = {
     Bucket: bucket,
     Key: generatedPath,
     Body: buffer,
     ACL: "public-read",
-    ContentType: `image/${videoFileExtension}`,
+    ContentType: `image/${imageFileExtension}`,
     ContentEncoding: "base64",
   };
   const command = new PutObjectCommand(params);

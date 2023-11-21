@@ -1,5 +1,11 @@
 # simple-s3-file-upload
 
+## 4.1.1
+
+### Patch Changes
+
+- Test for the image upload
+
 ## 4.1.0
 
 ### Minor Changes
