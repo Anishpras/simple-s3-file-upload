@@ -154,6 +154,74 @@ If the `file` parameter is not provided, the function returns an `Error` object 
 
 If an error occurs during the S3 upload process, the function catches the error and logs it to the console.
 
+# `uploadFile` Function Documentation
+
+The `uploadFile` function is designed to facilitate the upload of files to an Amazon S3 bucket. This function is asynchronous and takes an object as an argument with the following properties:
+
+## Input Parameters
+
+- `file` (type: `Object`, required): An object containing the file details, including the file buffer and original name.
+
+  - `buffer` (type: `Buffer`, required): The file content as a Buffer.
+  - `originalname` (type: `string`, required): The original name of the file.
+
+- `accessKeyId` (type: `string`, required): AWS access key ID for S3 authentication.
+- `secretAccessKey` (type: `string`, required): AWS secret access key for S3 authentication.
+- `region` (type: `string`, required): AWS region where the S3 bucket is located.
+- `bucket` (type: `string`, required): Name of the S3 bucket where the file will be uploaded.
+- `path` (type: `string`, required): Path within the S3 bucket where the file will be stored.
+- `maxFileSize` (type: `number`, required): Maximum allowed file size in megabytes.
+
+## Output
+
+The function returns a Promise that resolves to an object with the following properties:
+
+- `message` (type: `string`): A success message indicating that the file was uploaded successfully.
+- `response` (type: `PutObjectCommandOutput`): The response data from the AWS S3 service.
+
+## Error Handling
+
+If the `file` parameter is not provided, the function throws an `Error` with the message "File not found."
+
+If the file size exceeds the specified `maxFileSize`, the function throws an `Error` with the message "File size exceeds the maximum allowed size."
+
+If an error occurs during the S3 upload process, the function catches the error, logs it to the console, and throws an `Error` with a detailed error message.
+
+## Dependencies
+
+This function relies on an external `s3Client` function, assumed to be correctly implemented elsewhere in your codebase.
+
+Please make sure to handle the AWS SDK and any other dependencies appropriately in your project.
+
+## Example Usage
+
+```javascript
+import { uploadFile } from 'your-module-path';
+
+const file = /* provide the object containing file buffer and original name */;
+const accessKeyId = 'your-access-key-id';
+const secretAccessKey = 'your-secret-access-key';
+const region = 'your-aws-region';
+const bucket = 'your-s3-bucket';
+const path = 'your-s3-path';
+const maxFileSize = 5; // Maximum file size allowed in megabytes
+
+uploadFile({
+  file,
+  accessKeyId,
+  secretAccessKey,
+  region,
+  bucket,
+  path,
+  maxFileSize,
+})
+  .then((result) => {
+    console.log('File uploaded successfully:', result.message);
+  })
+  .catch((error) => {
+    console.error('Error during file upload:', error.message);
+  });
+
 ## Dependencies
 
 This function relies on an external `s3Client` function, assumed to be correctly implemented elsewhere in your codebase.
@@ -171,3 +239,4 @@ This code is released under the [MIT License](LICENSE).
 ---
 
 **Note**: Ensure that you have the required AWS permissions and have configured your S3 bucket to allow the intended actions for successful image uploads.
+```

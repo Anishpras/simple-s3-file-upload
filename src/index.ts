@@ -60,10 +60,9 @@ export const uploadImage = async ({
       url: `https://${bucket}.s3.${region}.amazonaws.com/${generatedPath}`,
       data,
     };
-  } catch (error) {
-    return {
-      error,
-    };
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(`Error uploading image: ${error.message}`);
   }
 };
 
@@ -99,13 +98,13 @@ export const uploadVideo = async ({
   try {
     const s3 = s3Client({ accessKeyId, secretAccessKey, region });
     const data = await s3.send(command);
-    console.log(data);
     return {
       url: `https://${bucket}.s3.${region}.amazonaws.com/${generatedPath}`,
       data,
     };
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
+    throw new Error(`Error uploading video: ${error.message}`);
   }
 };
 export const uploadFile = async ({

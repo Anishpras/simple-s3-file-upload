@@ -1,5 +1,11 @@
 # simple-s3-file-upload
 
+## 4.1.0
+
+### Minor Changes
+
+- Added readme
+
 ## 4.0.0
 
 ### Major Changes
