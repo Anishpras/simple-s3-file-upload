@@ -1,5 +1,11 @@
 # simple-s3-file-upload
 
+## 4.1.2
+
+### Patch Changes
+
+- Added the url for file
+
 ## 4.1.1
 
 ### Patch Changes

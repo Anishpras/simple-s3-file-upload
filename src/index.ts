@@ -149,7 +149,11 @@ export const uploadFile = async ({
 
   try {
     const response = await client.send(command);
-    return { message: "File uploaded successfully", response };
+    return {
+      message: "File uploaded successfully",
+      response,
+      url: `https://${bucket}.s3.${region}.amazonaws.com/${s3Key}`,
+    };
   } catch (err: any) {
     console.error("Error uploading file:", err);
     throw new Error(`Error uploading file: ${err.message}`);
