@@ -3,6 +3,7 @@ import {
   PutObjectCommand,
   PutObjectCommandInput,
 } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Buffer, File } from "buffer";
 const getImageBuffer = (base64: string) => {
   const base64str = base64.replace(/^data:image\/\w+;base64,/, "");
@@ -157,5 +158,62 @@ export const uploadFile = async ({
   } catch (err: any) {
     console.error("Error uploading file:", err);
     throw new Error(`Error uploading file: ${err.message}`);
+  }
+};
+
+export const uploadFileUsingPresignedUrl = async ({
+  accessKeyId,
+  secretAccessKey,
+  region,
+  bucket,
+  path,
+  targetFile,
+}: {
+  accessKeyId: string;
+  secretAccessKey: string;
+  region: string;
+  bucket: string;
+  path: string;
+  targetFile: HTMLFormElement;
+}) => {
+  try {
+    const formData = new FormData(targetFile);
+
+    const file = formData.get("file");
+
+    if (!file) {
+      throw new Error("File not found");
+    }
+    if (!(file instanceof File)) {
+      throw new Error("File not found or invalid type");
+    }
+    const fileType = encodeURIComponent(file.type);
+    const generatedPath = `${path}${new Date().toISOString()}.${fileType}`;
+    const client = s3Client({ accessKeyId, secretAccessKey, region });
+    const command = new PutObjectCommand({
+      Bucket: bucket,
+      Key: generatedPath,
+    });
+    const preSignedUrl = await getSignedUrl(client, command, {
+      expiresIn: 3600,
+    });
+    const response = await fetch(preSignedUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: file,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    return {
+      message: "File uploaded successfully",
+      response,
+      url: `https://${bucket}.s3.${region}.amazonaws.com/${generatedPath}`,
+    };
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(`Error uploading file: ${error.message}`);
   }
 };

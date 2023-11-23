@@ -1,5 +1,11 @@
 # simple-s3-file-upload
 
+## 5.0.0
+
+### Major Changes
+
+- Added presignedUrl uploader
+
 ## 4.1.2
 
 ### Patch Changes

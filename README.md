@@ -195,7 +195,7 @@ Please make sure to handle the AWS SDK and any other dependencies appropriately 
 
 ## Example Usage
 
-```javascript
+````javascript
 import { uploadFile } from 'your-module-path';
 
 const file = /* provide the object containing file buffer and original name */;
@@ -222,6 +222,67 @@ uploadFile({
     console.error('Error during file upload:', error.message);
   });
 
+# `uploadFileUsingPresignedUrl` Function Documentation
+
+The `uploadFileUsingPresignedUrl` function is designed to facilitate the upload of files to an Amazon S3 bucket using a presigned URL. This function is asynchronous and takes an object as an argument with the following properties:
+
+## Input Parameters
+
+- `accessKeyId` (type: `string`, required): AWS access key ID for S3 authentication.
+- `secretAccessKey` (type: `string`, required): AWS secret access key for S3 authentication.
+- `region` (type: `string`, required): AWS region where the S3 bucket is located.
+- `bucket` (type: `string`, required): Name of the S3 bucket where the file will be uploaded.
+- `path` (type: `string`, required): Path within the S3 bucket where the file will be stored.
+- `targetFile` (type: `HTMLFormElement`, required): The HTML form element containing the file to be uploaded.
+
+## Output
+
+The function returns a Promise that resolves to an object with the following properties:
+
+- `message` (type: `string`): A success message indicating that the file was uploaded successfully.
+- `response` (type: `Response`): The response object from the fetch operation.
+- `url` (type: `string`): The public URL of the uploaded file.
+
+## Error Handling
+
+If the `targetFile` parameter is not provided or does not contain a valid file, the function throws an `Error` with the message "File not found or invalid type."
+
+If an error occurs during the S3 upload process or the fetch operation, the function catches the error, logs it to the console, and throws an `Error` with a detailed error message.
+
+## Dependencies
+
+This function relies on an external `s3Client` function, assumed to be correctly implemented elsewhere in your codebase. Additionally, it uses the `getSignedUrl` function to generate a presigned URL for S3 uploads.
+
+Please make sure to handle the AWS SDK and any other dependencies appropriately in your project.
+
+## Example Usage
+
+```javascript
+import { uploadFileUsingPresignedUrl } from 'your-module-path';
+
+const accessKeyId = 'your-access-key-id';
+const secretAccessKey = 'your-secret-access-key';
+const region = 'your-aws-region';
+const bucket = 'your-s3-bucket';
+const path = 'your-s3-path';
+const targetFile = /* provide the HTML form element containing the file */;
+
+uploadFileUsingPresignedUrl({
+  accessKeyId,
+  secretAccessKey,
+  region,
+  bucket,
+  path,
+  targetFile,
+})
+  .then((result) => {
+    console.log('File uploaded successfully:', result.message);
+    console.log('Public URL:', result.url);
+  })
+  .catch((error) => {
+    console.error('Error during file upload:', error.message);
+  });
+
 ## Dependencies
 
 This function relies on an external `s3Client` function, assumed to be correctly implemented elsewhere in your codebase.
@@ -239,4 +300,4 @@ This code is released under the [MIT License](LICENSE).
 ---
 
 **Note**: Ensure that you have the required AWS permissions and have configured your S3 bucket to allow the intended actions for successful image uploads.
-```
+````
