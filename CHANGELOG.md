@@ -1,5 +1,11 @@
 # simple-s3-file-upload
 
+## 5.1.0
+
+### Minor Changes
+
+- Updated tsup
+
 ## 5.0.0
 
 ### Major Changes
