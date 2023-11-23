@@ -1,5 +1,11 @@
 # simple-s3-file-upload
 
+## 5.1.1
+
+### Patch Changes
+
+- Readme updated
+
 ## 5.1.0
 
 ### Minor Changes
