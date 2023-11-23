@@ -102,7 +102,7 @@ The `uploadVideo` function is designed to facilitate the upload of video files t
 ## Example Usage
 
 ```javascript
-import { uploadVideo } from 'your-module-path';
+import { uploadVideo } from 'simple-s3-file-upload';
 
 const file = /* provide the File object representing your video */;
 const accessKeyId = 'your-access-key-id';
@@ -196,7 +196,7 @@ Please make sure to handle the AWS SDK and any other dependencies appropriately 
 ## Example Usage
 
 ````javascript
-import { uploadFile } from 'your-module-path';
+import { uploadFile } from 'simple-s3-file-upload';
 
 const file = /* provide the object containing file buffer and original name */;
 const accessKeyId = 'your-access-key-id';
@@ -258,7 +258,7 @@ Please make sure to handle the AWS SDK and any other dependencies appropriately 
 ## Example Usage
 
 ```javascript
-import { uploadFileUsingPresignedUrl } from 'your-module-path';
+import { uploadFileUsingPresignedUrl } from 'simple-s3-file-upload';
 
 const accessKeyId = 'your-access-key-id';
 const secretAccessKey = 'your-secret-access-key';
