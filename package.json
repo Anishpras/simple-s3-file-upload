@@ -7,8 +7,6 @@
   "types": "dist/index.d.ts",
   "private": false,
   "scripts": {
-    "dev": "vitest",
-    "test": "vitest run",
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "lint": "tsc",
     "ci": "pnpm run lint && pnpm run build",
@@ -42,8 +40,7 @@
     "@changesets/cli": "^2.26.2",
     "@types/node": "^20.9.4",
     "tsup": "^8.0.1",
-    "typescript": "^5.3.2",
-    "vitest": "^0.34.6"
+    "typescript": "^5.3.2"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.456.0",
