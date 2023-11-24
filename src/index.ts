@@ -217,3 +217,56 @@ export const uploadFileUsingPresignedUrl = async ({
     throw new Error(`Error uploading file: ${error.message}`);
   }
 };
+
+export const getUploadPresignedUrl = async ({
+  accessKeyId,
+  secretAccessKey,
+  region,
+  bucket,
+  path,
+  fileType,
+}: {
+  accessKeyId: string;
+  secretAccessKey: string;
+  region: string;
+  bucket: string;
+  path: string;
+  fileType: string;
+}) => {
+  try {
+    // const formData = new FormData(targetFile);
+
+    // const file = formData.get("file");
+
+    // if (!file) {
+    //   throw new Error("File not found");
+    // }
+    // if (!(file instanceof File)) {
+    //   throw new Error("File not found or invalid type");
+    // }
+    // const fileType = encodeURIComponent(file.type);
+    const generatedPath = `${path}${new Date().toISOString()}.${fileType}`;
+    const client = s3Client({ accessKeyId, secretAccessKey, region });
+    const command = new PutObjectCommand({
+      Bucket: bucket,
+      Key: generatedPath,
+    });
+    const preSignedUrl = await getSignedUrl(client, command, {
+      expiresIn: 3600,
+    });
+    // const response = await fetch(preSignedUrl, {
+    //   method: "PUT",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: file,
+    // });
+
+    // if (!response.ok) {
+    //   throw new Error(`HTTP error! Status: ${response.status}`);
+    // }
+
+    return preSignedUrl;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(`Error uploading file: ${error.message}`);
+  }
+};
